@@ -1,0 +1,514 @@
+type Comments @aws_iam @aws_api_key {
+  id: ID!
+  MusicalId: String
+  IsSpoiler: Boolean
+  Comment: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type TopicLogs @aws_iam @aws_api_key {
+  id: ID!
+  SearchType: String
+  SearchTopic: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type MusicalInteraction @aws_iam @aws_api_key {
+  id: ID!
+  UserName: String
+  MusicalId: String
+  LikedStatus: Boolean
+  WatchListStatus: Boolean
+  SongLiked: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+type BroadwayMusicals @aws_iam @aws_api_key {
+  id: ID!
+  MusicalName: String
+  ReleaseYear: Int
+  ProductionType: String
+  MusicAuthor: String
+  WikiLink: AWSURL
+  PosterLink: AWSURL
+  SpotifyLink: AWSURL
+  TrackList: AWSJSON
+  MusicDuration: String
+  MusicalSummary: String
+  MusicalTopics: AWSJSON
+  SearchType: String
+  createdAt: AWSDateTime!
+  updatedAt: AWSDateTime!
+}
+
+input ModelStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelBooleanInput {
+  ne: Boolean
+  eq: Boolean
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+}
+
+input ModelIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  attributeExists: Boolean
+  attributeType: ModelAttributeTypes
+  size: ModelSizeInput
+}
+
+input ModelSubscriptionStringInput {
+  ne: String
+  eq: String
+  le: String
+  lt: String
+  ge: String
+  gt: String
+  contains: String
+  notContains: String
+  between: [String]
+  beginsWith: String
+  in: [String]
+  notIn: [String]
+}
+
+input ModelSubscriptionIntInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+  in: [Int]
+  notIn: [Int]
+}
+
+input ModelSubscriptionFloatInput {
+  ne: Float
+  eq: Float
+  le: Float
+  lt: Float
+  ge: Float
+  gt: Float
+  between: [Float]
+  in: [Float]
+  notIn: [Float]
+}
+
+input ModelSubscriptionBooleanInput {
+  ne: Boolean
+  eq: Boolean
+}
+
+input ModelSubscriptionIDInput {
+  ne: ID
+  eq: ID
+  le: ID
+  lt: ID
+  ge: ID
+  gt: ID
+  contains: ID
+  notContains: ID
+  between: [ID]
+  beginsWith: ID
+  in: [ID]
+  notIn: [ID]
+}
+
+enum ModelAttributeTypes {
+  binary
+  binarySet
+  bool
+  list
+  map
+  number
+  numberSet
+  string
+  stringSet
+  _null
+}
+
+input ModelSizeInput {
+  ne: Int
+  eq: Int
+  le: Int
+  lt: Int
+  ge: Int
+  gt: Int
+  between: [Int]
+}
+
+enum ModelSortDirection {
+  ASC
+  DESC
+}
+
+type ModelCommentsConnection @aws_api_key @aws_iam {
+  items: [Comments]!
+  nextToken: String
+}
+
+input ModelCommentsFilterInput {
+  id: ModelIDInput
+  MusicalId: ModelStringInput
+  IsSpoiler: ModelBooleanInput
+  Comment: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelCommentsFilterInput]
+  or: [ModelCommentsFilterInput]
+  not: ModelCommentsFilterInput
+}
+
+type Query {
+  getComments(id: ID!): Comments @aws_api_key @aws_iam
+  listComments(filter: ModelCommentsFilterInput, limit: Int, nextToken: String): ModelCommentsConnection @aws_api_key @aws_iam
+  getTopicLogs(id: ID!): TopicLogs @aws_api_key @aws_iam
+  listTopicLogs(filter: ModelTopicLogsFilterInput, limit: Int, nextToken: String): ModelTopicLogsConnection @aws_api_key @aws_iam
+  getMusicalInteraction(id: ID!): MusicalInteraction @aws_api_key @aws_iam
+  listMusicalInteractions(filter: ModelMusicalInteractionFilterInput, limit: Int, nextToken: String): ModelMusicalInteractionConnection @aws_api_key @aws_iam
+  getBroadwayMusicals(id: ID!): BroadwayMusicals @aws_api_key @aws_iam
+  listBroadwayMusicals(filter: ModelBroadwayMusicalsFilterInput, limit: Int, nextToken: String): ModelBroadwayMusicalsConnection @aws_api_key @aws_iam
+}
+
+input ModelCommentsConditionInput {
+  MusicalId: ModelStringInput
+  IsSpoiler: ModelBooleanInput
+  Comment: ModelStringInput
+  and: [ModelCommentsConditionInput]
+  or: [ModelCommentsConditionInput]
+  not: ModelCommentsConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateCommentsInput {
+  id: ID
+  MusicalId: String
+  IsSpoiler: Boolean
+  Comment: String
+}
+
+input UpdateCommentsInput {
+  id: ID!
+  MusicalId: String
+  IsSpoiler: Boolean
+  Comment: String
+}
+
+input DeleteCommentsInput {
+  id: ID!
+}
+
+type Mutation {
+  createComments(input: CreateCommentsInput!, condition: ModelCommentsConditionInput): Comments @aws_api_key @aws_iam
+  updateComments(input: UpdateCommentsInput!, condition: ModelCommentsConditionInput): Comments @aws_api_key @aws_iam
+  deleteComments(input: DeleteCommentsInput!, condition: ModelCommentsConditionInput): Comments @aws_api_key @aws_iam
+  createTopicLogs(input: CreateTopicLogsInput!, condition: ModelTopicLogsConditionInput): TopicLogs @aws_api_key @aws_iam
+  updateTopicLogs(input: UpdateTopicLogsInput!, condition: ModelTopicLogsConditionInput): TopicLogs @aws_api_key @aws_iam
+  deleteTopicLogs(input: DeleteTopicLogsInput!, condition: ModelTopicLogsConditionInput): TopicLogs @aws_api_key @aws_iam
+  createMusicalInteraction(input: CreateMusicalInteractionInput!, condition: ModelMusicalInteractionConditionInput): MusicalInteraction @aws_api_key @aws_iam
+  updateMusicalInteraction(input: UpdateMusicalInteractionInput!, condition: ModelMusicalInteractionConditionInput): MusicalInteraction @aws_api_key @aws_iam
+  deleteMusicalInteraction(input: DeleteMusicalInteractionInput!, condition: ModelMusicalInteractionConditionInput): MusicalInteraction @aws_api_key @aws_iam
+  createBroadwayMusicals(input: CreateBroadwayMusicalsInput!, condition: ModelBroadwayMusicalsConditionInput): BroadwayMusicals @aws_api_key @aws_iam
+  updateBroadwayMusicals(input: UpdateBroadwayMusicalsInput!, condition: ModelBroadwayMusicalsConditionInput): BroadwayMusicals @aws_api_key @aws_iam
+  deleteBroadwayMusicals(input: DeleteBroadwayMusicalsInput!, condition: ModelBroadwayMusicalsConditionInput): BroadwayMusicals @aws_api_key @aws_iam
+}
+
+input ModelSubscriptionCommentsFilterInput {
+  id: ModelSubscriptionIDInput
+  MusicalId: ModelSubscriptionStringInput
+  IsSpoiler: ModelSubscriptionBooleanInput
+  Comment: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionCommentsFilterInput]
+  or: [ModelSubscriptionCommentsFilterInput]
+}
+
+type Subscription {
+  onCreateComments(filter: ModelSubscriptionCommentsFilterInput): Comments @aws_subscribe(mutations: ["createComments"]) @aws_api_key @aws_iam
+  onUpdateComments(filter: ModelSubscriptionCommentsFilterInput): Comments @aws_subscribe(mutations: ["updateComments"]) @aws_api_key @aws_iam
+  onDeleteComments(filter: ModelSubscriptionCommentsFilterInput): Comments @aws_subscribe(mutations: ["deleteComments"]) @aws_api_key @aws_iam
+  onCreateTopicLogs(filter: ModelSubscriptionTopicLogsFilterInput): TopicLogs @aws_subscribe(mutations: ["createTopicLogs"]) @aws_api_key @aws_iam
+  onUpdateTopicLogs(filter: ModelSubscriptionTopicLogsFilterInput): TopicLogs @aws_subscribe(mutations: ["updateTopicLogs"]) @aws_api_key @aws_iam
+  onDeleteTopicLogs(filter: ModelSubscriptionTopicLogsFilterInput): TopicLogs @aws_subscribe(mutations: ["deleteTopicLogs"]) @aws_api_key @aws_iam
+  onCreateMusicalInteraction(filter: ModelSubscriptionMusicalInteractionFilterInput): MusicalInteraction @aws_subscribe(mutations: ["createMusicalInteraction"]) @aws_api_key @aws_iam
+  onUpdateMusicalInteraction(filter: ModelSubscriptionMusicalInteractionFilterInput): MusicalInteraction @aws_subscribe(mutations: ["updateMusicalInteraction"]) @aws_api_key @aws_iam
+  onDeleteMusicalInteraction(filter: ModelSubscriptionMusicalInteractionFilterInput): MusicalInteraction @aws_subscribe(mutations: ["deleteMusicalInteraction"]) @aws_api_key @aws_iam
+  onCreateBroadwayMusicals(filter: ModelSubscriptionBroadwayMusicalsFilterInput): BroadwayMusicals @aws_subscribe(mutations: ["createBroadwayMusicals"]) @aws_api_key @aws_iam
+  onUpdateBroadwayMusicals(filter: ModelSubscriptionBroadwayMusicalsFilterInput): BroadwayMusicals @aws_subscribe(mutations: ["updateBroadwayMusicals"]) @aws_api_key @aws_iam
+  onDeleteBroadwayMusicals(filter: ModelSubscriptionBroadwayMusicalsFilterInput): BroadwayMusicals @aws_subscribe(mutations: ["deleteBroadwayMusicals"]) @aws_api_key @aws_iam
+}
+
+type ModelTopicLogsConnection @aws_api_key @aws_iam {
+  items: [TopicLogs]!
+  nextToken: String
+}
+
+input ModelTopicLogsFilterInput {
+  id: ModelIDInput
+  SearchType: ModelStringInput
+  SearchTopic: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelTopicLogsFilterInput]
+  or: [ModelTopicLogsFilterInput]
+  not: ModelTopicLogsFilterInput
+}
+
+input ModelTopicLogsConditionInput {
+  SearchType: ModelStringInput
+  SearchTopic: ModelStringInput
+  and: [ModelTopicLogsConditionInput]
+  or: [ModelTopicLogsConditionInput]
+  not: ModelTopicLogsConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateTopicLogsInput {
+  id: ID
+  SearchType: String
+  SearchTopic: String
+}
+
+input UpdateTopicLogsInput {
+  id: ID!
+  SearchType: String
+  SearchTopic: String
+}
+
+input DeleteTopicLogsInput {
+  id: ID!
+}
+
+input ModelSubscriptionTopicLogsFilterInput {
+  id: ModelSubscriptionIDInput
+  SearchType: ModelSubscriptionStringInput
+  SearchTopic: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionTopicLogsFilterInput]
+  or: [ModelSubscriptionTopicLogsFilterInput]
+}
+
+type ModelMusicalInteractionConnection @aws_api_key @aws_iam {
+  items: [MusicalInteraction]!
+  nextToken: String
+}
+
+input ModelMusicalInteractionFilterInput {
+  id: ModelIDInput
+  UserName: ModelStringInput
+  MusicalId: ModelStringInput
+  LikedStatus: ModelBooleanInput
+  WatchListStatus: ModelBooleanInput
+  SongLiked: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelMusicalInteractionFilterInput]
+  or: [ModelMusicalInteractionFilterInput]
+  not: ModelMusicalInteractionFilterInput
+}
+
+input ModelMusicalInteractionConditionInput {
+  UserName: ModelStringInput
+  MusicalId: ModelStringInput
+  LikedStatus: ModelBooleanInput
+  WatchListStatus: ModelBooleanInput
+  SongLiked: ModelStringInput
+  and: [ModelMusicalInteractionConditionInput]
+  or: [ModelMusicalInteractionConditionInput]
+  not: ModelMusicalInteractionConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateMusicalInteractionInput {
+  id: ID
+  UserName: String
+  MusicalId: String
+  LikedStatus: Boolean
+  WatchListStatus: Boolean
+  SongLiked: String
+}
+
+input UpdateMusicalInteractionInput {
+  id: ID!
+  UserName: String
+  MusicalId: String
+  LikedStatus: Boolean
+  WatchListStatus: Boolean
+  SongLiked: String
+}
+
+input DeleteMusicalInteractionInput {
+  id: ID!
+}
+
+input ModelSubscriptionMusicalInteractionFilterInput {
+  id: ModelSubscriptionIDInput
+  UserName: ModelSubscriptionStringInput
+  MusicalId: ModelSubscriptionStringInput
+  LikedStatus: ModelSubscriptionBooleanInput
+  WatchListStatus: ModelSubscriptionBooleanInput
+  SongLiked: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionMusicalInteractionFilterInput]
+  or: [ModelSubscriptionMusicalInteractionFilterInput]
+}
+
+type ModelBroadwayMusicalsConnection @aws_api_key @aws_iam {
+  items: [BroadwayMusicals]!
+  nextToken: String
+}
+
+input ModelBroadwayMusicalsFilterInput {
+  id: ModelIDInput
+  MusicalName: ModelStringInput
+  ReleaseYear: ModelIntInput
+  ProductionType: ModelStringInput
+  MusicAuthor: ModelStringInput
+  WikiLink: ModelStringInput
+  PosterLink: ModelStringInput
+  SpotifyLink: ModelStringInput
+  TrackList: ModelStringInput
+  MusicDuration: ModelStringInput
+  MusicalSummary: ModelStringInput
+  MusicalTopics: ModelStringInput
+  SearchType: ModelStringInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+  and: [ModelBroadwayMusicalsFilterInput]
+  or: [ModelBroadwayMusicalsFilterInput]
+  not: ModelBroadwayMusicalsFilterInput
+}
+
+input ModelBroadwayMusicalsConditionInput {
+  MusicalName: ModelStringInput
+  ReleaseYear: ModelIntInput
+  ProductionType: ModelStringInput
+  MusicAuthor: ModelStringInput
+  WikiLink: ModelStringInput
+  PosterLink: ModelStringInput
+  SpotifyLink: ModelStringInput
+  TrackList: ModelStringInput
+  MusicDuration: ModelStringInput
+  MusicalSummary: ModelStringInput
+  MusicalTopics: ModelStringInput
+  SearchType: ModelStringInput
+  and: [ModelBroadwayMusicalsConditionInput]
+  or: [ModelBroadwayMusicalsConditionInput]
+  not: ModelBroadwayMusicalsConditionInput
+  createdAt: ModelStringInput
+  updatedAt: ModelStringInput
+}
+
+input CreateBroadwayMusicalsInput {
+  id: ID
+  MusicalName: String
+  ReleaseYear: Int
+  ProductionType: String
+  MusicAuthor: String
+  WikiLink: AWSURL
+  PosterLink: AWSURL
+  SpotifyLink: AWSURL
+  TrackList: AWSJSON
+  MusicDuration: String
+  MusicalSummary: String
+  MusicalTopics: AWSJSON
+  SearchType: String
+}
+
+input UpdateBroadwayMusicalsInput {
+  id: ID!
+  MusicalName: String
+  ReleaseYear: Int
+  ProductionType: String
+  MusicAuthor: String
+  WikiLink: AWSURL
+  PosterLink: AWSURL
+  SpotifyLink: AWSURL
+  TrackList: AWSJSON
+  MusicDuration: String
+  MusicalSummary: String
+  MusicalTopics: AWSJSON
+  SearchType: String
+}
+
+input DeleteBroadwayMusicalsInput {
+  id: ID!
+}
+
+input ModelSubscriptionBroadwayMusicalsFilterInput {
+  id: ModelSubscriptionIDInput
+  MusicalName: ModelSubscriptionStringInput
+  ReleaseYear: ModelSubscriptionIntInput
+  ProductionType: ModelSubscriptionStringInput
+  MusicAuthor: ModelSubscriptionStringInput
+  WikiLink: ModelSubscriptionStringInput
+  PosterLink: ModelSubscriptionStringInput
+  SpotifyLink: ModelSubscriptionStringInput
+  TrackList: ModelSubscriptionStringInput
+  MusicDuration: ModelSubscriptionStringInput
+  MusicalSummary: ModelSubscriptionStringInput
+  MusicalTopics: ModelSubscriptionStringInput
+  SearchType: ModelSubscriptionStringInput
+  createdAt: ModelSubscriptionStringInput
+  updatedAt: ModelSubscriptionStringInput
+  and: [ModelSubscriptionBroadwayMusicalsFilterInput]
+  or: [ModelSubscriptionBroadwayMusicalsFilterInput]
+}

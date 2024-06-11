@@ -1,0 +1,8 @@
+RecommendedMusicals:
+  handler: Functions/Recommendations/recommendedmusicals.lambda_handler
+  layers: arn:aws:lambda:us-east-1:579725526598:layer:Recommendation_Layer:1
+  events:
+    - http:
+        path: /getrecommendations
+        method: get
+        cors: true

@@ -1,0 +1,32 @@
+org: yourorgname
+app: inforetrival
+service: inforetrival-searchengine
+
+frameworkVersion: '3'
+
+provider:
+  name: aws
+  runtime: python3.9
+  region: us-east-1
+  iam:
+    #Role that rund lambdas 
+    role: arn:aws:iam::1245:role/LambdaRunner
+  timeout: 900 
+
+custom:
+  pythonRequirements:
+    dockerizePip: true
+    layer:
+      name: Recommendation_Layer
+      description: "Layer for the recommendation lambda"
+      compatibleRuntimes: 
+        - python3.9
+      retain: True
+
+plugins:
+  - serverless-offline
+  - serverless-python-requirements
+
+functions:
+  - ${file(Functions/WordSearch/wordsearch.yml)}
+  - ${file(Functions/Recommendations/recommendations.yml)}

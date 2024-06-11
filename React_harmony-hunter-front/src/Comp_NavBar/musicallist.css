@@ -1,0 +1,26 @@
+.description{
+    margin-top: 20px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+.justified-paragraph {
+    text-align: justify;
+    font-size: 20px;
+}
+
+.search-bar{
+    margin-top: 20px;
+    margin-left: 200px;
+    margin-right: 200px;
+}
+
+.searchbar{
+    margin-top: 20px;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

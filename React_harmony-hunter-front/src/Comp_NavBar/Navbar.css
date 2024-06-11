@@ -1,0 +1,49 @@
+.sum{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(41, 56, 95);
+}
+
+.logo{
+    margin-left: 1rem;
+    color: white;
+    font-size: 40px;
+    font-weight: bolder;
+}
+
+.ul{
+    display: flex;
+    margin: 25px;
+}
+
+.item{
+    display: flex;
+}
+
+li{
+    margin: 0 1rem;
+}
+
+a{
+    text-decoration: none;
+    color: white;
+    font-weight: bolder;
+}
+
+.ul {
+    list-style-type: none;
+}
+  
+.ul li {
+    display: inline;
+    margin-right: 10px; /* Add some space between the list items */
+}
+
+.btn-signout {
+    border: none; /* Remove the border */
+    background-color: transparent; /* Remove background color */
+    padding: 0; /* Remove padding */
+    margin-left: 10px; /* Add some space between the Sign Out button and the last list item */
+    color: azure;
+}

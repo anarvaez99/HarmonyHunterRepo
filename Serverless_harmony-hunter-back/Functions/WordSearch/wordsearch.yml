@@ -1,0 +1,8 @@
+SimilarWordSearch:
+  handler: Functions/WordSearch/similarword.lambda_handler
+  layers: arn:aws:lambda:us-east-1:579725526598:layer:NLP_Layer:1
+  events:
+    - http:
+        path: /getsimilarword
+        method: get
+        cors: true
