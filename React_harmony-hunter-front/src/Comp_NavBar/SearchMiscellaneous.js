@@ -4,12 +4,12 @@ import Navbar from './Navbar';
 // import { withAuthenticator } from '@aws-amplify/ui-react';
 import { GiCardRandom } from "react-icons/gi";
 import { generateClient } from "aws-amplify/api";
-import { listBroadwayMusicals } from "../graphql/queries";
+// import { listBroadwayMusicals } from "../graphql/queries";
 import { findBestMatch } from 'string-similarity';
 import {Table, Row, Col, Form, Button, ListGroup, Spinner, Alert } from 'react-bootstrap';
 import MusicalDetailsCard from './MusicalDetailsCard';
 
-const client = generateClient()
+// const client = generateClient()
 
 
 function SearchMiscellaneous() {
